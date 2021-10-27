@@ -15,6 +15,18 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: Boolean,
+        default: true,
+    },
+    favorites: {
+        type: Array,
+        default: [],
+    },
+    history: {
+        type: Array,
+        default: [],
+    },
 });
 
 UserSchema.pre('save', async function (next) {

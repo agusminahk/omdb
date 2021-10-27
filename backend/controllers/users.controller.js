@@ -1,24 +1,52 @@
 const UsersService = require('../services/users');
 
 class UsersController {
-    static async createUser(req, res, next) {
-        const user = await UsersService.createUser(req.body);
-        if (user === null) res.status(400).send('este Email ya existe');
-
-        //req.logIn(user, (err) => {
-        //  if (err) return next(err);
-        // res.status(200).send('usuario creado con exito');
-        // });
-        user ? res.status(200).json(user) : res.status(404).send('Bad Request');
+    // User
+    static async getUser(req, res) {
+        const user = await UsersService.getUser(req.params.id);
+        if (user) res.json({ user });
+        res.status(404).send('User not found');
     }
 
-    static async getUser(req, res) {
-        const id = req.params.id;
-        const user = await UsersService.getUser(id);
-        if (user) {
-            res.send(user);
-        }
-        res.send('usuario no existe');
+    static async editUser(req, res) {
+        res.send();
+    }
+
+    static async deleteUser(req, res) {
+        res.send();
+    }
+
+    // History
+    static async getHistory(req, res) {
+        res.send();
+    }
+
+    static async setHistory(req, res) {
+        res.send();
+    }
+
+    static async editHistory(req, res) {
+        res.send();
+    }
+    static async deleteHistory(req, res) {
+        res.send();
+    }
+
+    // Favorite
+    static async getFavorites(req, res) {
+        res.send();
+    }
+
+    static async setFavorites(req, res) {
+        res.send();
+    }
+
+    static async editFavorites(req, res) {
+        res.send();
+    }
+
+    static async deleteFavorites(req, res) {
+        res.send();
     }
 }
 

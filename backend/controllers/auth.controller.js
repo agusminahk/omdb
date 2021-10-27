@@ -1,11 +1,9 @@
-const passport = require('passport');
-const UsersController = require('./users.controller');
+const UsersService = require('../services/users');
 
 class AuthController {
-    static async singUp(req, res) {
-        const user = await UsersController.createUser;
-        if (user) res.status(200).json(user);
-        res.status(401).send('Error on user create');
+    static async singUp(req, res, next) {
+        const user = await UsersService.createUser(req.body);
+        user ? res.json({ user }) : res.status(404).send('Bad Request');
     }
 
     static signIn(req, res) {

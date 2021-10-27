@@ -1,14 +1,12 @@
 const User = require('../models/User');
 
 class UserServices {
+    // GET
     static async createUser(body) {
-        const { email } = body;
         try {
-            const user = await User.findOne({ email });
-            if (user) return null;
             return await new User(body).save();
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -19,6 +17,10 @@ class UserServices {
             console.error(error);
         }
     }
+
+    // static async showHistory() {
+
+    // }
 }
 
 module.exports = UserServices;

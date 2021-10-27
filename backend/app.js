@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongodb-session')(session);
 const dotenv = require('dotenv');
 const volleyball = require('volleyball');
@@ -15,6 +16,7 @@ require('./config/passport');
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(volleyball);
 
 app.use(
