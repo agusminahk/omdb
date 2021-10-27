@@ -17,12 +17,12 @@ const UserSchema = new Schema({
     },
 });
 
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 12);
     next();
 });
 
-UserSchema.methods.validatePassword = async (password) => {
+UserSchema.methods.matchPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
