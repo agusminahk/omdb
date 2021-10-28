@@ -1,19 +1,32 @@
-const UsersService = require('../services/users');
+const UserService = require('../services/users');
+const joi = require('../utils/joi');
 
 class UsersController {
     // User
     static async getUser(req, res) {
-        const user = await UsersService.getUser(req.params.id);
-        if (user) res.json({ user });
-        res.status(404).send('User not found');
+        const user = await UserService.getUser(req.params.id);
+
+        if (user) return res.json({ user });
+
+        return res.status(404).send('User not found');
     }
 
     static async editUser(req, res) {
-        res.send();
+        const { name, password, age, email } = req.body;
+        const { error } = joi.validate({ name, password, age, email });
+
+        if (!error) {
+            const editted = await UserService.editUser(req.params.id, req.body);
+            return res.json({ user_editted: editted });
+        }
+
+        return res.status(400).json({ error });
     }
 
     static async deleteUser(req, res) {
-        res.send();
+        const disabled = await UserService.changeStatus(req.params.id);
+        if (disabled) return res.sendStatus(204);
+        return res.sendStatus(400);
     }
 
     // History

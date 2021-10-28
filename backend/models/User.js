@@ -15,6 +15,11 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    age: {
+        type: Number,
+        min: 10,
+        required: true,
+    },
     status: {
         type: Boolean,
         default: true,
@@ -29,13 +34,24 @@ const UserSchema = new Schema({
     },
 });
 
-UserSchema.pre('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, 12);
-    next();
+UserSchema.method({
+    matchPassword: async function (password) {
+        const res = await bcrypt.compareSync(password, this.password);
+        return res;
+    },
 });
 
-UserSchema.methods.matchPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-};
+UserSchema.pre('save', async function (next) {
+    this.password = await bcrypt.hash(this.password, 12);
+    return next();
+});
 
+// UserSchema.method('verify', function (password) {
+//     return new Promise((resolve, reject) => {
+//         bcrypt.compare(password, this.password, (err, res) => {
+//             if (err) reject(err);
+//             resolve(res);
+//         });
+//     });
+// });
 module.exports = model('User', UserSchema);

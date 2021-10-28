@@ -10,12 +10,11 @@ passport.use(
         },
         async (email, password, done) => {
             // Match Email's User
-            const user = await User.findOne({ email });
+            const user = await User.find({ email: email });
             if (!user) return done(null, false, { message: 'email not found' });
 
             // Match Password's User
-
-            const match = await user.matchPassword(password);
+            const match = await new User(...user).matchPassword(password);
             if (match) return done(null, user);
 
             return done(null, false, { message: 'password not found' });
@@ -24,11 +23,8 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    console.log(user);
+    done(null, user[0]._id);
 });
 
-passport.deserializeUser(async (id, done) => {
-    await User.findById(id, (err, user) => {
-        done(err, user);
-    });
-});
+passport.deserializeUser((id, done) => User.find({ _id: id }).then((user) => done(null, user)));
