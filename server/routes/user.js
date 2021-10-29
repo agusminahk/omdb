@@ -14,12 +14,11 @@ router.post('/:id/history', UsersController.setHistory);
 
 // Put
 router.put('/:id', UsersController.editUser);
-router.put('/favs', UsersController.editFavorites);
-router.put('/history', UsersController.editHistory);
+router.put('/:id/history', UsersController.editHistory);
 
 // Delete
 router.delete('/:id', UsersController.deleteUser); // only change status to false;
-router.delete('/favs', UsersController.deleteFavorites);
-router.delete('/history', UsersController.deleteHistory);
+router.delete('/:id/favs', UsersController.deleteFavorites);
+router.delete('/:id/history', UsersController.deleteHistory);
 
 module.exports = router;

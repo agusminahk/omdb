@@ -46,27 +46,22 @@ class UsersController {
     }
 
     static async setFavorites(req, res) {
-        console.log(req.params);
         const movie = await axios.get(`${process.env.API_URL}&i=${req.body.mov_id}`);
+        console.log(movie.data.Response);
+        if (movie.data.Response === 'False') return res.status(404).send('ID movie not found. Bad request');
         const favs = await FavService.setFavs(req.params.id, movie.data);
         if (favs) return res.status(200).json({ favs });
         return res.sendStatus(404);
     }
 
-    static async editFavorites(req, res) {
-        res.send();
-    }
-
     static async deleteFavorites(req, res) {
-        res.send();
+        const deleted = await FavService.deleteFav(req.params.id, req.body.mov_id);
+        if (deleted) return res.status(204).json({ favs: deleted });
+        return res.status(404).send('Fail on delete');
     }
 
     // History
-    static async getHistory(req, res) {
-        // const users = await UserService.getAllUsers();
-        // if (users) return res.json({ users });
-        // return res.status(404).send('History not found');
-    }
+    static async getHistory(req, res) {}
 
     static async setHistory(req, res) {
         res.send();

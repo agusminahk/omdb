@@ -1,24 +1,31 @@
 const axios = require('axios');
-const dotenv = require('dotenv');
 
 const UserService = require('./users.js');
 const User = require('../models/User');
 
-dotenv.config();
-
 class FavService {
     static async setFavs(user_id, movie) {
         try {
-            //const user = await UserService.getUser(user_id);
             return await User.findOneAndUpdate(
                 { _id: user_id },
                 {
-                    $set: {
-                        favorites: [movie],
+                    $push: {
+                        favorites: {
+                            $each: [movie],
+                            $position: 0, //add favs to the beginning of the array
+                        },
                     },
                 },
                 { new: true }
             );
+        } catch (error) {
+            console.error({ error });
+        }
+    }
+
+    static async deleteFav(user_id, movie_id) {
+        try {
+            return await User.findOneAndUpdate({ _id: user_id }, { $pull: { favorites: { imdbID: movie_id } } }, { new: true });
         } catch (error) {
             console.error({ error });
         }
