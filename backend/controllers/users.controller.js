@@ -1,4 +1,7 @@
+const axios = require('axios');
+
 const UserService = require('../services/users');
+const FavService = require('../services/favorites');
 const joi = require('../utils/joi');
 
 class UsersController {
@@ -9,6 +12,12 @@ class UsersController {
         if (user) return res.json({ user });
 
         return res.status(404).send('User not found');
+    }
+
+    static async getAllUsers(req, res) {
+        const users = await UserService.getAllUsers();
+        if (users) return res.json({ users });
+        return res.status(404).send('Users not found');
     }
 
     static async editUser(req, res) {
@@ -25,13 +34,38 @@ class UsersController {
 
     static async deleteUser(req, res) {
         const disabled = await UserService.changeStatus(req.params.id);
-        if (disabled) return res.sendStatus(204);
+        if (disabled) return res.status(204).send('User disabled');
         return res.sendStatus(400);
+    }
+
+    // Favorite
+    static async getFavorites(req, res) {
+        const favs = await UserService.getUser(req.params.id, 'get_favs', false);
+        if (favs) return res.status(200).json({ favs });
+        return res.sendStatus(400);
+    }
+
+    static async setFavorites(req, res) {
+        console.log(req.params);
+        const movie = await axios.get(`${process.env.API_URL}&i=${req.body.mov_id}`);
+        const favs = await FavService.setFavs(req.params.id, movie.data);
+        if (favs) return res.status(200).json({ favs });
+        return res.sendStatus(404);
+    }
+
+    static async editFavorites(req, res) {
+        res.send();
+    }
+
+    static async deleteFavorites(req, res) {
+        res.send();
     }
 
     // History
     static async getHistory(req, res) {
-        res.send();
+        // const users = await UserService.getAllUsers();
+        // if (users) return res.json({ users });
+        // return res.status(404).send('History not found');
     }
 
     static async setHistory(req, res) {
@@ -42,23 +76,6 @@ class UsersController {
         res.send();
     }
     static async deleteHistory(req, res) {
-        res.send();
-    }
-
-    // Favorite
-    static async getFavorites(req, res) {
-        res.send();
-    }
-
-    static async setFavorites(req, res) {
-        res.send();
-    }
-
-    static async editFavorites(req, res) {
-        res.send();
-    }
-
-    static async deleteFavorites(req, res) {
         res.send();
     }
 }

@@ -14,7 +14,6 @@ class AuthController {
     }
 
     static signIn(req, res) {
-        //res.json({ id: req.user._id, email: req.user.email, name: req.user.name });
         res.send(req.user);
     }
 

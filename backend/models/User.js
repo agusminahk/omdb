@@ -46,12 +46,4 @@ UserSchema.pre('save', async function (next) {
     return next();
 });
 
-// UserSchema.method('verify', function (password) {
-//     return new Promise((resolve, reject) => {
-//         bcrypt.compare(password, this.password, (err, res) => {
-//             if (err) reject(err);
-//             resolve(res);
-//         });
-//     });
-// });
 module.exports = model('User', UserSchema);
