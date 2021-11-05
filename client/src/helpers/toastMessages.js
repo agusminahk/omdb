@@ -21,7 +21,7 @@ export const toastDelete = (toast, title) => {
     toast({
         title: title,
         position: 'top',
-        description: 'Has been removed from favorites',
+        description: 'Has been removed to favorites',
         status: 'error',
         duration: 2800,
         isClosable: true,
@@ -32,7 +32,7 @@ export const toastAdd = (toast, title) => {
     toast({
         title: title,
         position: 'top',
-        description: 'Has been added from favorites',
+        description: 'Has been added to favorites',
         status: 'success',
         duration: 2800,
         isClosable: true,
