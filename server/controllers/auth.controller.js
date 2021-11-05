@@ -3,14 +3,14 @@ const joi = require('../utils/joi');
 
 class AuthController {
     static async singUp(req, res, next) {
-        const { name, password, age, email } = req.body;
-        const { error } = joi.validate({ name, password, age, email });
-        console.log(error);
+        const { username, password, email } = req.body;
+        const { error } = joi.validate({ username, password, email });
+
         if (!error) {
             const user = await UsersService.createUser(req.body);
             return user ? res.json({ user }) : res.status(404).send('Bad Request');
         }
-        res.status(404).json({ error });
+        next(error);
     }
 
     static signIn(req, res) {
@@ -23,7 +23,7 @@ class AuthController {
             path: '/',
         });
         req.session.destroy(function (err) {
-            res.redirect('/');
+            res.send({});
         });
     }
 }

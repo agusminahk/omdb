@@ -1,6 +1,3 @@
-const axios = require('axios');
-
-const UserService = require('./users.js');
 const User = require('../models/User');
 
 class FavService {
@@ -25,7 +22,7 @@ class FavService {
 
     static async deleteFav(user_id, movie_id) {
         try {
-            return await User.findOneAndUpdate({ _id: user_id }, { $pull: { favorites: { imdbID: movie_id } } }, { new: true });
+            return await User.findByIdAndUpdate({ _id: user_id }, { $pull: { favorites: { imdbID: movie_id } } }, { new: true });
         } catch (error) {
             console.error({ error });
         }

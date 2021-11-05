@@ -2,22 +2,17 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true,
         unique: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
     password: {
         type: String,
-        required: true,
-    },
-    age: {
-        type: Number,
-        min: 10,
         required: true,
     },
     status: {
@@ -34,6 +29,7 @@ const UserSchema = new Schema({
     },
 });
 
+// Instance Method => check password
 UserSchema.method({
     matchPassword: async function (password) {
         const res = await bcrypt.compareSync(password, this.password);
@@ -41,6 +37,7 @@ UserSchema.method({
     },
 });
 
+//Schema Hook => hash password
 UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 12);
     return next();

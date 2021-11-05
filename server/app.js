@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongodb-session')(session);
 const dotenv = require('dotenv');
 const volleyball = require('volleyball');
 const cors = require('cors');
@@ -9,12 +8,13 @@ const passport = require('passport');
 
 const client = require('./config/db');
 const router = require('./routes');
-
-dotenv.config();
-const app = express();
 require('./config/passport');
 
+const app = express();
+dotenv.config();
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 app.use(volleyball);
@@ -24,22 +24,18 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        store: new MongoStore({
-            url: 'mongodb://localhost:27017/',
-            databaseName: 'omdb',
-            collection: 'sessions',
-            autoReconnect: true,
-        }),
+        cookie: {
+            maxAge: 3600 * 24 * 60 * 60 * 365,
+        },
     })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.urlencoded({ extended: true }));
 app.use('/api', router);
 
-app.get('/', (req, res) => {
-    res.send('HOME');
+app.use((req, res) => {
+    res.status(404).send({ error: 'Not found' });
 });
 
 client.then(() => {

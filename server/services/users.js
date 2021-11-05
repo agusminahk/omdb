@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 class UserService {
-    static async createUser({ name, email, password, age }) {
+    static async createUser({ username, email, password }) {
         try {
-            const user = new User({ name, email, password, age });
+            const user = new User({ username, email, password });
             return await user.save();
         } catch (error) {
             console.error({ error });
@@ -24,6 +24,21 @@ class UserService {
         }
     }
 
+    static async getUserLike(user, user_id) {
+        try {
+            if (user_id) {
+                return await User.find({ _id: { $ne: user_id }, username: { $regex: '.*' + user + '.*' } }).select({
+                    password: 0,
+                });
+            }
+            return await User.find({ username: { $regex: '.*' + user + '.*' } }).select({
+                password: 0,
+            });
+        } catch (error) {
+            console.error({ error });
+        }
+    }
+
     static async getAllUsers() {
         try {
             return await User.find({ status: true }).select({ password: 0 });
@@ -32,12 +47,12 @@ class UserService {
         }
     }
 
-    static async editUser(id, { password, name, age }) {
+    static async editUser(id, { password, username }) {
         try {
             return await User.findByIdAndUpdate(
                 id,
                 {
-                    $set: { password: password && bcrypt.hashSync(password, 12), name, age },
+                    $set: { password: password && bcrypt.hashSync(password, 12), username },
                 },
                 { new: true }
             );

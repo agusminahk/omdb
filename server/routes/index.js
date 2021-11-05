@@ -1,11 +1,11 @@
 const router = require('express').Router();
+
 const authRouter = require('./auth');
 const userRouter = require('./user');
-const movieRouter = require('./movies');
-const checkAuth = require('../middlewares/auth');
+const mediaRouter = require('./media');
 
 router.use('/auth', authRouter);
-router.use('/user', checkAuth, userRouter);
-router.use('/media', checkAuth, movieRouter);
+router.use('/user', userRouter);
+router.use('/media', mediaRouter);
 
 module.exports = router;
