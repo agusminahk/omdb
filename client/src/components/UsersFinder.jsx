@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Text, Flex, Wrap, WrapItem } from '@chakra-ui/react';
 import axios from 'axios';
-
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from '@choc-ui/chakra-autocomplete';
+import {
+    AutoComplete,
+    AutoCompleteInput,
+    AutoCompleteItem,
+    AutoCompleteList,
+} from '@choc-ui/chakra-autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 
 import UserCard from '../common/UserCard';
@@ -18,10 +22,15 @@ const Users = () => {
     const users = useSelector((state) => state.allUsers);
 
     useEffect(() => {
-        axios
-            .post('/api/user', { userLike: input, user_id: user._id })
-            .then((res) => dispatch(getUsers(res.data)))
-            .catch((err) => ({ err: err.mesage }));
+        setUsers();
+        function setUsers() {
+            return axios
+                .post('/api/user', { userLike: input, user_id: user._id })
+                .then((res) => dispatch(getUsers(res.data)))
+                .catch((err) => ({ err: err.mesage }));
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input]);
 
     if (!users)
@@ -47,7 +56,7 @@ const Users = () => {
                         autoFocus
                     />
                     <AutoCompleteList>
-                        {users.map(({ username, email, _id }) => (
+                        {users.map(({ username, _id }) => (
                             <AutoCompleteItem
                                 onFocus={() => window.scrollTo(0, 0)}
                                 onClick={(e) => {

@@ -17,7 +17,7 @@ export const sendLoginRequest = createAsyncThunk('LOGIN', (login) => {
     });
 });
 export const sendUpdateRequest = createAsyncThunk('UPDATE', ({ username, password, id }) => {
-    return axios.post(`/api/user/${id}`, { username, password }).then((res) => {
+    return axios.put(`/api/user/${id}`, { username, password }).then((res) => {
         if (res.status === 200) {
             return res.data[0];
         }
@@ -30,6 +30,6 @@ export const userReducer = createReducer(
         [getUser]: (state, action) => action.payload,
         [logoutUser]: (state, action) => action.payload,
         [sendLoginRequest.fulfilled]: (state, action) => action.payload,
-        [sendUpdateRequest.fulfilled]: (state, action) => action.payload,
+        [sendUpdateRequest.fulfilled]: (state, action) => (state = action.payload),
     }
 );

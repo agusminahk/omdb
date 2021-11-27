@@ -10,12 +10,11 @@ import MediaCard from '../common/MediaCard';
 import '../common/MediaCard.css';
 
 function FavsCarousel() {
+    const favs = useSelector(({ favs }) => favs);
     const [slider, setSlider] = React.useState(<Slider />);
 
     const top = useBreakpointValue({ base: '90%', md: '50%' });
     const side = useBreakpointValue({ base: '30%', md: '40px' });
-
-    const favs = useSelector(({ favs }) => favs);
 
     if (!favs.length) return <FavsEmpty />;
 
@@ -71,9 +70,9 @@ function FavsCarousel() {
                 {/* Slider */}
                 <Slider {...settings} ref={(slider) => setSlider(slider)}>
                     {favs.map((favorite, i) => (
-                        <>
-                            <MediaCard key={`FavCar=${i}`} item={favorite} />
-                        </>
+                        <div key={`FavCar=${i}`}>
+                            <MediaCard key={i} item={favorite} />
+                        </div>
                     ))}
                 </Slider>
             </Box>

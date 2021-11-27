@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, IconButton, useBreakpointValue, Stack, useColorModeValue, Text, Container, chakra } from '@chakra-ui/react';
+import { Box, IconButton, useBreakpointValue, Stack, Container } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Slider from 'react-slick';
 
@@ -24,7 +24,14 @@ export default function CaptionCarousel() {
 
     return (
         <>
-            <Box position={'relative'} height={'400px'} width={'full'} overflow={'hidden'} mt="27px" mb="33px">
+            <Box
+                position={'relative'}
+                height={'400px'}
+                width={'full'}
+                overflow={'hidden'}
+                mt="27px"
+                mb="33px"
+            >
                 <link
                     rel="stylesheet"
                     type="text/css"
@@ -45,6 +52,7 @@ export default function CaptionCarousel() {
                     top={top}
                     transform={'translate(0%, -50%)'}
                     zIndex={2}
+                    onClick={() => slider?.slickPrev()}
                 >
                     <BiLeftArrowAlt size="40px" />
                 </IconButton>
@@ -57,6 +65,7 @@ export default function CaptionCarousel() {
                     top={top}
                     transform={'translate(0%, -50%)'}
                     zIndex={2}
+                    onClick={() => slider?.slickPrev()}
                 >
                     <BiRightArrowAlt size="40px" />
                 </IconButton>

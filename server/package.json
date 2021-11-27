@@ -4,7 +4,7 @@
     "description": "omdb",
     "main": "app.js",
     "scripts": {
-        "start": "nodemon app.js"
+        "start": "node app.js"
     },
     "author": "Agustin Minahk",
     "license": "ISC",

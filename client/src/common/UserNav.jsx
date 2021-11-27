@@ -1,8 +1,17 @@
 import React from 'react';
-import { Flex, HStack, Button, Icon, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from '@chakra-ui/react';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import {
+    Flex,
+    HStack,
+    Button,
+    Icon,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuDivider,
+} from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { logoutUser } from '../state/user';
 import { CgUserlane, CgProfile } from 'react-icons/cg';
 import { FaEye } from 'react-icons/fa';
@@ -13,7 +22,6 @@ import axios from 'axios';
 const UserNav = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const user = useSelector(({ user }) => user);
 
     const handleLogout = () => {
         axios
@@ -66,7 +74,8 @@ const UserNav = () => {
                             <MenuItem
                                 onClick={() => {
                                     handleLogout();
-                                    history.go();
+                                    history.push('/');
+                                    //history.go();
                                 }}
                                 minWidth="240px"
                                 icon={<FiLogOut />}

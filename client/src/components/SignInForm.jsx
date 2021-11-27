@@ -15,7 +15,7 @@ import {
     InputRightElement,
 } from '@chakra-ui/react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import bixbax from '../assets/bixbax.svg';
@@ -29,6 +29,7 @@ const SignInForm = () => {
     const toast = useToast();
     const history = useHistory();
     const dispatch = useDispatch();
+
     // States
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -51,13 +52,19 @@ const SignInForm = () => {
 
                 .catch((err) => ({ err: err.message }));
         } catch (error) {
-            console.log({ error });
+            console.error({ error: error.message });
         }
     };
 
     return (
         <>
-            <Flex flexDirection="column" width="100wh" height="100vh" justifyContent="center" alignItems="center">
+            <Flex
+                flexDirection="column"
+                width="100wh"
+                height="100vh"
+                justifyContent="center"
+                alignItems="center"
+            >
                 <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
                     <Avatar bg="black.800" src={bixbax} size="xl" />
                     <Heading color="teal.400">Welcome</Heading>
@@ -66,7 +73,10 @@ const SignInForm = () => {
                             <Stack spacing={4} p="1rem" boxShadow="md">
                                 <FormControl>
                                     <InputGroup>
-                                        <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />
+                                        <InputLeftElement
+                                            pointerEvents="none"
+                                            children={<CFaUserAlt color="gray.300" />}
+                                        />
                                         <Input
                                             type="email"
                                             placeholder="your-email@example.com"
@@ -95,7 +105,13 @@ const SignInForm = () => {
                                         </InputRightElement>
                                     </InputGroup>
                                 </FormControl>
-                                <Button borderRadius={0} type="submit" variant="solid" colorScheme="teal" width="full">
+                                <Button
+                                    borderRadius={0}
+                                    type="submit"
+                                    variant="solid"
+                                    colorScheme="teal"
+                                    width="full"
+                                >
                                     Login
                                 </Button>
                             </Stack>

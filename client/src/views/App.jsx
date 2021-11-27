@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, useLocation } from 'react-router';
 import { getUser } from '../state/user.js';
 import { getUsers } from '../state/allUsers';
 import { setFavs } from '../state/favs.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import React from 'react';
@@ -13,7 +13,6 @@ import Page404 from './Page404';
 import SignUpForm from '../components/SignUpForm';
 import SignInForm from '../components/SignInForm';
 import { MediaContent } from '../components/MediaContent';
-// import GridMedia from '../components/GridMedia.jsx';
 
 import './Spinner.css';
 import Users from '../components/UsersFinder.jsx';
@@ -22,7 +21,6 @@ import AdminProfile from '../components/UserLogedProfile.jsx';
 import UserSettings from '../components/UserEditSettings';
 import Search from './Search.jsx';
 import GridMedia from '../components/GridMedia.jsx';
-import { useHistory } from 'react-router-dom';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -37,15 +35,17 @@ const App = () => {
                 if (content.status === 200) setMedia(content.data);
 
                 const user = await axios.get('/api/user/me');
-                if (user.data[0].email) await dispatch(getUser(user.data[0]));
-                if (user.data[0].email) await dispatch(setFavs(user.data[0].favorites));
+                if (user.data[0].email) dispatch(getUser(user.data[0]));
+                if (user.data[0].email) dispatch(setFavs(user.data[0].favorites));
 
                 const allUsers = await axios.get('/api/user');
                 dispatch(getUsers(allUsers.data.users));
             } catch (err) {
-                console.log({ err: err.message });
+                console.error({ err: err.message });
             }
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -53,11 +53,13 @@ const App = () => {
         async function fetchMedia() {
             try {
                 const user = await axios.get('/api/user/me');
+                if (user.data[0].email) dispatch(getUser(user.data[0]));
                 if (user.data[0].email) dispatch(setFavs(user.data[0].favorites));
             } catch (err) {
-                console.log({ err: err.message });
+                console.error({ err: err.message });
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key]);
 
     if (!media.length)
@@ -84,7 +86,11 @@ const App = () => {
 
                 <Route path="/media/movie" render={() => <GridMedia content={media} type="movie" />} />
                 <Route path="/media/serie" render={() => <GridMedia content={media} type="series" />} />
-                <Route exact path="/media/:id" render={({ match }) => <MediaContent id={match.params.id} />} />
+                <Route
+                    exact
+                    path="/media/:id"
+                    render={({ match }) => <MediaContent id={match.params.id} />}
+                />
 
                 <Route exact path="/users" render={() => <Users />} />
                 <Route path="/users/profile/settings" render={() => <UserSettings />} />

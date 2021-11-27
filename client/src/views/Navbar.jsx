@@ -10,39 +10,53 @@ import {
     VStack,
     IconButton,
     CloseButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
     Image,
 } from '@chakra-ui/react';
-import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import bixbax from '../assets/bixbax.svg';
-
 import Header from '../components/Header';
 import GeneralSearch from '../components/GeneralSearch';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const NavBar = () => {
-    const history = useHistory();
     const bg = useColorModeValue('white', 'gray.800');
     const mobileNav = useDisclosure();
 
     return (
         <div>
-            <chakra.header bg={bg} w="100%" pos="relative" px={{ base: 2, sm: 2 }} py={4} shadow="md" zIndex="30">
+            <chakra.header
+                bg={bg}
+                w="100%"
+                pos="relative"
+                px={{ base: 2, sm: 2 }}
+                py={4}
+                shadow="md"
+                zIndex="30"
+            >
                 <Flex alignItems="center" justifyContent="space-between" mx="auto">
                     <Link to="/">
                         <Flex>
                             <Image boxSize="50px" src={bixbax} objectFit="cover" alt="bixbax logo" ml="3" />
-                            <chakra.h1 display="block" fontSize="3xl" fontWeight="medium" ml="2" letterSpacing={5}>
+                            <chakra.h1
+                                display="block"
+                                fontSize="3xl"
+                                fontWeight="medium"
+                                ml="2"
+                                letterSpacing={5}
+                            >
                                 BIXBAX
                             </chakra.h1>
                         </Flex>
                     </Link>
-                    <HStack display="flex" alignItems="center" ml="60px" mr="-20px" spacing={1} justify="center">
+                    <HStack
+                        display="flex"
+                        alignItems="center"
+                        ml="60px"
+                        mr="-20px"
+                        spacing={1}
+                        justify="center"
+                    >
                         <GeneralSearch></GeneralSearch>
                     </HStack>
                     <HStack display="flex" alignItems="center" spacing={1} mr={10} ml={3}>

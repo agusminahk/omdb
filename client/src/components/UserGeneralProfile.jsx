@@ -39,7 +39,13 @@ const UserProfile = ({ id }) => {
     return (
         <>
             <Container mt={4}>
-                <Image src={iconUser} alt={currentUser?.username} boxSize="200px" borderRadius="full" mx="auto" />
+                <Image
+                    src={iconUser}
+                    alt={currentUser?.username}
+                    boxSize="200px"
+                    borderRadius="full"
+                    mx="auto"
+                />
                 <Center>
                     <VStack>
                         <Heading>{currentUser?.username}</Heading>
@@ -47,7 +53,6 @@ const UserProfile = ({ id }) => {
                             {currentUser?.email} {', '} {'Some part of the world'}
                         </Text>
                         <Button
-                            as="text"
                             fontSize="3xl"
                             color="white"
                             background="pink.500"
@@ -102,7 +107,6 @@ const UserProfile = ({ id }) => {
                     >
                         {currentUser.favorites
                             ? currentUser.favorites.map((token, tid) => {
-                                  console.log(token);
                                   return (
                                       <Tr
                                           key={tid}
@@ -141,12 +145,17 @@ const UserProfile = ({ id }) => {
                                                           >
                                                               {token[x]}
                                                           </Td>
-                                                          <Td color="white" fontSize="md" fontWeight="hairline">
+                                                          <Td
+                                                              color="white"
+                                                              fontSize="md"
+                                                              fontWeight="hairline"
+                                                          >
                                                               {token[x]}
                                                           </Td>
                                                       </React.Fragment>
                                                   );
                                               }
+                                              return null;
                                           })}
                                           <Td
                                               display={{
@@ -167,12 +176,16 @@ const UserProfile = ({ id }) => {
                                           >
                                               Actions
                                           </Td>
-                                          {Object.keys(token).map((x) => {
+                                          {Object.keys(token).map((x, i) => {
                                               if (x === 'imdbID') {
                                                   return (
-                                                      <React.Fragment>
+                                                      <React.Fragment key={i}>
                                                           <Td>
-                                                              <ButtonGroup variant="solid" size="sm" spacing={18}>
+                                                              <ButtonGroup
+                                                                  variant="solid"
+                                                                  size="sm"
+                                                                  spacing={18}
+                                                              >
                                                                   <Link to={`/media/${token[x]}`}>
                                                                       <IconButton
                                                                           colorScheme="blue"
@@ -184,6 +197,7 @@ const UserProfile = ({ id }) => {
                                                       </React.Fragment>
                                                   );
                                               }
+                                              return null;
                                           })}
                                       </Tr>
                                   );

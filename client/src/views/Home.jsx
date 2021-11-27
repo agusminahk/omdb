@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Wrap, WrapItem, Flex, chakra, Box, Button } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 

@@ -1,4 +1,4 @@
-import { Box, IconButton, useBreakpointValue, Stack, Button, Text, Container, chakra } from '@chakra-ui/react';
+import { Box, IconButton, useBreakpointValue, Button } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 
 import React from 'react';
@@ -10,7 +10,7 @@ import MediaCard from './MediaCard';
 
 const SliderSerieSearch = () => {
     const [slider, setSlider] = React.useState(<Slider />);
-    const [, series] = useSelector(({ search }) => search);
+    const series = useSelector(({ search }) => search[1]);
 
     const top = useBreakpointValue({ base: '90%', md: '50%' });
     const side = useBreakpointValue({ base: '30%', md: '40px' });
@@ -73,10 +73,9 @@ const SliderSerieSearch = () => {
                 ) : null}
                 <Slider {...settings} ref={(slider) => setSlider(slider)}>
                     {series.map((favorite, index) => (
-                        <>
-                            {console.log(favorite)}
+                        <div key={index}>
                             <MediaCard key={index} item={favorite} />
-                        </>
+                        </div>
                     ))}
                 </Slider>
             </Box>

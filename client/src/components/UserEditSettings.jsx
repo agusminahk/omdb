@@ -8,7 +8,7 @@ import {
     Heading,
     Input,
     Stack,
-    chakra,
+    Text,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Page404 from '../views/Page404';
-import { successToast } from '../helpers/toastMessages';
+import { successToast, errorToast } from '../helpers/toastMessages';
 import { sendUpdateRequest } from '../state/user';
 
 const SignUpForm = () => {
@@ -26,21 +26,25 @@ const SignUpForm = () => {
 
     const user = useSelector(({ user }) => user);
     const [username, setUsername] = useState(user.username);
-    const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
 
     const reUser = /^[a-zA-Z0-9]*$/;
     const reSp = /^[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~*]*$/;
 
-    const {
+    let {
         handleSubmit,
         register,
         formState: { errors, isSubmitting },
     } = useForm();
 
-    function onSubmit({ confirmPass, username }) {
-        dispatch(sendUpdateRequest({ username, password: confirmPass, id: user._id })).then(() => {
+    function onSubmit({ confirmPass, password, username }) {
+        if (confirmPass !== password) {
+            errorToast(toast, 'Passwords do not match!');
+            return;
+        }
+
+        return dispatch(sendUpdateRequest({ username, password: confirmPass, id: user._id })).then(() => {
             successToast(toast, 'Your user has been edited correctly!');
             history.push('/');
         });
@@ -59,10 +63,14 @@ const SignUpForm = () => {
                 <Flex minH={'100vh'} align={'center'} justify={'center'}>
                     <Stack spacing={4} w={'full'} maxW={'md'} rounded={'xl'} boxShadow={'lg'} mt={-12} p={6}>
                         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
-                            <chakra.h3 ml="20">Edit Profile &#128397;</chakra.h3>
+                            <Text ml="20" color="teal.300">
+                                Edit Profile &#128397;
+                            </Text>
                         </Heading>
 
-                        <FormControl isInvalid={reSp.test(username) && errors.username}>
+                        <FormControl
+                            isInvalid={reSp.test(username) || (errors.username && username.length < 3)}
+                        >
                             <FormLabel htmlFor="name">Username</FormLabel>
                             <Input
                                 id="username"
@@ -84,14 +92,19 @@ const SignUpForm = () => {
                         </FormControl>
                         <FormControl isInvalid={errors.email}>
                             <FormLabel htmlFor="email">Email address</FormLabel>
-                            <Input isDisabled type="email" value={email} _placeholder={{ color: 'gray.500' }} />
+                            <Input
+                                isDisabled
+                                type="email"
+                                value={user.email}
+                                _placeholder={{ color: 'gray.500' }}
+                            />
                             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
                         </FormControl>
                         <FormControl isInvalid={password.length < 8 && errors.password} id="password">
                             <FormLabel htmlFor="password">Password</FormLabel>
                             <Input
                                 type="password"
-                                id="email"
+                                id="password"
                                 {...register('password', {
                                     required: 'Password is Required',
                                     minLength: { value: 8, message: 'Password minimun length should be 8' },
@@ -100,19 +113,14 @@ const SignUpForm = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="********"
                                 _placeholder={{ color: 'gray.500' }}
-                                type="password"
                             />
                             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                         </FormControl>
-                        <FormControl
-                            isInvalid={password.length < 8 && errors.password && confirmPass != password}
-                            id="password"
-                            isRequired
-                        >
+                        <FormControl isInvalid={confirmPass !== password} id="password" isRequired>
                             <FormLabel htmlFor="confirmPass">Confirm Password</FormLabel>
                             <Input
-                                type="text"
-                                id="email"
+                                type="password"
+                                id="confirmPass"
                                 {...register('confirmPass', {
                                     required: 'Password is Required',
                                     minLength: { value: 8, message: 'Passwords not equals' },
@@ -121,9 +129,10 @@ const SignUpForm = () => {
                                 onChange={(e) => setConfirmPass(e.target.value)}
                                 placeholder="********"
                                 _placeholder={{ color: 'gray.500' }}
-                                type="password"
                             />
-                            <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+                            <FormErrorMessage>
+                                {errors.confirmPass && errors.confirmPass.message}
+                            </FormErrorMessage>
                         </FormControl>
 
                         <Stack spacing={6} direction={['column', 'row']}>

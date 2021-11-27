@@ -26,7 +26,7 @@ const GeneralSearch = () => {
 
                 history.push('/search');
             } catch (err) {
-                console.log({ err: err.message });
+                console.error({ error: err.message });
             }
         }
     }

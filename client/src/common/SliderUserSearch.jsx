@@ -1,7 +1,5 @@
-import { Box, IconButton, useBreakpointValue, Stack, Button, Text, Container, chakra } from '@chakra-ui/react';
+import { Box, IconButton, useBreakpointValue, Button } from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Slider from 'react-slick';
@@ -11,13 +9,20 @@ import UserCard from './UserCard';
 
 const SliderSerieSearch = () => {
     const [slider, setSlider] = React.useState(<Slider />);
-    const [, , users] = useSelector(({ search }) => search);
+    const users = useSelector(({ search }) => search[2]);
 
     const top = useBreakpointValue({ base: '90%', md: '50%' });
     const side = useBreakpointValue({ base: '30%', md: '40px' });
     return (
         <div>
-            <Box position={'relative'} height={'400px'} width={'full'} overflow={'hidden'} mt="27px" mb="33px">
+            <Box
+                position={'relative'}
+                height={'400px'}
+                width={'full'}
+                overflow={'hidden'}
+                mt="27px"
+                mb="33px"
+            >
                 <link
                     rel="stylesheet"
                     type="text/css"
@@ -69,7 +74,14 @@ const SliderSerieSearch = () => {
                     </Box>
                 )}
 
-                <Box position={'relative'} height={'400px'} width={'full'} overflow={'hidden'} mt="27px" mb="33px">
+                <Box
+                    position={'relative'}
+                    height={'400px'}
+                    width={'full'}
+                    overflow={'hidden'}
+                    mt="27px"
+                    mb="33px"
+                >
                     <Slider {...settings} ref={(slider) => setSlider(slider)}>
                         {users && users.length
                             ? users.map((user, i) => (

@@ -1,4 +1,4 @@
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import { userReducer } from './user.js';
 import { allUsersReducer } from './allUsers.js';
 import { configureStore } from '@reduxjs/toolkit';

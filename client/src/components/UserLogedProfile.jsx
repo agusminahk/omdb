@@ -36,7 +36,7 @@ const AdminProfile = () => {
     if (!user.email)
         return (
             <>
-                <Page404 />
+                <Page404 />;
             </>
         );
 
@@ -51,7 +51,6 @@ const AdminProfile = () => {
                             {user?.email} {', '} {'Some part of the world'}
                         </Text>
                         <Button
-                            as="text"
                             fontSize="3xl"
                             color="white"
                             background="pink.500"
@@ -144,12 +143,17 @@ const AdminProfile = () => {
                                                           >
                                                               {token[x]}
                                                           </Td>
-                                                          <Td color="white" fontSize="md" fontWeight="hairline">
+                                                          <Td
+                                                              color="white"
+                                                              fontSize="md"
+                                                              fontWeight="hairline"
+                                                          >
                                                               {token[x]}
                                                           </Td>
                                                       </React.Fragment>
                                                   );
                                               }
+                                              return null;
                                           })}
                                           <Td
                                               display={{
@@ -173,9 +177,13 @@ const AdminProfile = () => {
                                           {Object.keys(token).map((x) => {
                                               if (x === 'imdbID') {
                                                   return (
-                                                      <React.Fragment>
+                                                      <React.Fragment key={token[x]}>
                                                           <Td>
-                                                              <ButtonGroup variant="solid" size="sm" spacing={18}>
+                                                              <ButtonGroup
+                                                                  variant="solid"
+                                                                  size="sm"
+                                                                  spacing={18}
+                                                              >
                                                                   <Link to={`/media/${token[x]}`}>
                                                                       <IconButton
                                                                           colorScheme="blue"
@@ -189,7 +197,10 @@ const AdminProfile = () => {
                                                                       icon={<BsFillTrashFill />}
                                                                       onClick={() => {
                                                                           dispatch(
-                                                                              deleteFav({ user_id: user._id, media_id: token[x] })
+                                                                              deleteFav({
+                                                                                  user_id: user._id,
+                                                                                  media_id: token[x],
+                                                                              })
                                                                           );
                                                                           history.push('/users/profile');
                                                                       }}
@@ -199,6 +210,7 @@ const AdminProfile = () => {
                                                       </React.Fragment>
                                                   );
                                               }
+                                              return null;
                                           })}
                                       </Tr>
                                   );

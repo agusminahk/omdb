@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { chakra, Box, Image, Flex, useColorModeValue } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import user_png from '../assets/icon_user_list.png';
 

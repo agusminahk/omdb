@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Text } from '@chakra-ui/react';
 import { FiHeart } from 'react-icons/fi';
 
-const HeartBtn = ({ id }) => {
+const HeartBtn = () => {
     const [active, setActive] = useState('default');
 
     return (

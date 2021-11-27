@@ -32,7 +32,7 @@ const SignUpForm = () => {
     const reUser = /^[a-zA-Z0-9_.-]*$/;
     const reSp = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~*]/;
 
-    const {
+    let {
         handleSubmit,
         register,
         formState: { errors, isSubmitting },
@@ -40,7 +40,6 @@ const SignUpForm = () => {
 
     function onSubmit({ email, password, username }) {
         axios.post('http://localhost:8080/api/auth/signup', { email, password, username }).then((res) => {
-            console.log(res);
             if (res.status === 200) {
                 dispatch(sendLoginRequest({ email, password })).then((res) => {
                     successToast(toast, 'Account created', `Yor account has been created. Enjoy!`);
@@ -53,7 +52,12 @@ const SignUpForm = () => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Flex minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+                <Flex
+                    minH={'100vh'}
+                    align={'center'}
+                    justify={'center'}
+                    bg={useColorModeValue('gray.50', 'gray.800')}
+                >
                     <Stack
                         spacing={4}
                         w={'full'}
@@ -109,10 +113,13 @@ const SignUpForm = () => {
                             />
                             <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
                         </FormControl>
-                        <FormControl isInvalid={password.length < 8 && errors.password} id="password" isRequired>
+                        <FormControl
+                            isInvalid={password.length < 8 && errors.password}
+                            id="password"
+                            isRequired
+                        >
                             <FormLabel htmlFor="password">Password</FormLabel>
                             <Input
-                                type="password"
                                 id="email"
                                 {...register('password', {
                                     required: 'Password is Required',

@@ -9,7 +9,7 @@ import { settings } from '../helpers/settingsCarousel';
 
 const SliderMovieSearch = () => {
     const [slider, setSlider] = React.useState(<Slider />);
-    const [movies, ...rest] = useSelector(({ search }) => search);
+    const movies = useSelector(({ search }) => search[0]);
 
     const top = useBreakpointValue({ base: '90%', md: '50%' });
     const side = useBreakpointValue({ base: '30%', md: '40px' });
