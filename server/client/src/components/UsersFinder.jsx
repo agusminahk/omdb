@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Text, Flex, Wrap, WrapItem } from '@chakra-ui/react';
-import axios from 'axios';
 import {
     AutoComplete,
     AutoCompleteInput,
@@ -13,6 +12,7 @@ import UserCard from '../common/UserCard';
 import Navbar from '../views/Navbar';
 import { getUsers } from '../state/allUsers';
 import '../views/Spinner.css';
+import { axiosInstance } from '../config/axiosConfig';
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Users = () => {
     useEffect(() => {
         setUsers();
         function setUsers() {
-            return axios
+            return axiosInstance
                 .post('/api/user', { userLike: input, user_id: user._id })
                 .then((res) => dispatch(getUsers(res.data)))
                 .catch((err) => ({ err: err.mesage }));

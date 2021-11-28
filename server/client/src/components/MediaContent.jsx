@@ -22,8 +22,6 @@ import { IoMdStarOutline } from 'react-icons/io';
 import { FaVoteYea } from 'react-icons/fa';
 import { MdOutlineWatchLater } from 'react-icons/md';
 
-import axios from 'axios';
-
 import StatsCard from '../common/StatsCard';
 import LikeButton from '../common/LikeButton';
 import LikeButtonActive from '../common/LikeButtonActive';
@@ -31,6 +29,7 @@ import { deleteFav } from '../state/favs.js';
 import { verify, setFavorite } from '../helpers/functions';
 import { toastDelete, toastAdd } from '../helpers/toastMessages';
 import './MediaContent.css';
+import { axiosInstance } from '../config/axiosConfig';
 
 export const MediaContent = ({ id }) => {
     const toast = useToast();
@@ -45,7 +44,7 @@ export const MediaContent = ({ id }) => {
     const year = media?.Year ? media.Year.substring(0, 4) : 'N/A';
 
     useEffect(() => {
-        axios
+        axiosInstance
             .get(`/api/media/${id}`)
             .then((res) => setMedia(res.data))
             .catch((err) => ({ err: err.message }));
@@ -57,7 +56,11 @@ export const MediaContent = ({ id }) => {
     return (
         <>
             <Box px={2} py={24} mx="auto" mt={'-66px'} justifyContent="center" align="center">
-                <Box w={{ base: 'full', md: 11 / 12, xl: 9 / 12 }} mx="auto" textAlign={{ base: 'center', md: 'center' }}>
+                <Box
+                    w={{ base: 'full', md: 11 / 12, xl: 9 / 12 }}
+                    mx="auto"
+                    textAlign={{ base: 'center', md: 'center' }}
+                >
                     <Flex id="mobile">
                         <Box w="full" h="full" direction="column">
                             <Image mx="auto" src={media.Poster} rounded={'lg'} w="200px" mb="15px"></Image>
@@ -120,7 +123,14 @@ export const MediaContent = ({ id }) => {
                             </chakra.p>
                             <Flex direction="row" mx="auto" mb="25px">
                                 {genre.map((genero) => (
-                                    <Badge rounded="full" w="100px" px="3" variant="outline" colorScheme="teal" ml="4">
+                                    <Badge
+                                        rounded="full"
+                                        w="100px"
+                                        px="3"
+                                        variant="outline"
+                                        colorScheme="teal"
+                                        ml="4"
+                                    >
                                         {genero}
                                     </Badge>
                                 ))}
@@ -191,7 +201,11 @@ export const MediaContent = ({ id }) => {
                                 stat={media?.imdbRating || 'N/A'}
                                 icon={<IoMdStarOutline size={'2em'} />}
                             />
-                            <StatsCard title={'Total Votes'} stat={media?.imdbVotes || 'N/A'} icon={<FaVoteYea size={'2em'} />} />
+                            <StatsCard
+                                title={'Total Votes'}
+                                stat={media?.imdbVotes || 'N/A'}
+                                icon={<FaVoteYea size={'2em'} />}
+                            />
                             <StatsCard
                                 title={'Duration'}
                                 stat={media?.Runtime || 'N/A'}
@@ -203,7 +217,12 @@ export const MediaContent = ({ id }) => {
             </Box>
             <section id="player">
                 <Box w="100vh" maxW="full" h="66vh" mx={'auto'} mb="10" textAlign="center">
-                    <ReactPlayer controls playing={play} volume={0.15} url="https://www.youtube.com/watch?v=jtzx5I03JpY" />
+                    <ReactPlayer
+                        controls
+                        playing={play}
+                        volume={0.15}
+                        url="https://www.youtube.com/watch?v=jtzx5I03JpY"
+                    />
                 </Box>
             </section>
         </>

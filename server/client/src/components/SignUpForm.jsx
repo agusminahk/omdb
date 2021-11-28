@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import {
     FormErrorMessage,
     Button,
@@ -19,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 
 import { sendLoginRequest } from '../state/user';
 import { successToast } from '../helpers/toastMessages';
+import { axiosInstance } from '../config/axiosConfig';
 
 const SignUpForm = () => {
     const toast = useToast();
@@ -39,7 +39,7 @@ const SignUpForm = () => {
     } = useForm();
 
     function onSubmit({ email, password, username }) {
-        axios.post('/api/auth/signup', { email, password, username }).then((res) => {
+        axiosInstance.post('/api/auth/signup', { email, password, username }).then((res) => {
             if (res.status === 200) {
                 dispatch(sendLoginRequest({ email, password })).then((res) => {
                     successToast(toast, 'Account created', `Yor account has been created. Enjoy!`);

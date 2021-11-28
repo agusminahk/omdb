@@ -1,10 +1,9 @@
-import axios from 'axios';
-
+import { axiosInstance } from '../config/axiosConfig.js';
 import { setFavs } from '../state/favs.js';
 import { logoutUser } from '../state/user';
 
 export function handleLogout(dispatch, history) {
-    axios
+    axiosInstance
         .get('/api/auth/logout')
         .then(({ data }) => {
             dispatch(logoutUser(data));
@@ -14,7 +13,7 @@ export function handleLogout(dispatch, history) {
 }
 
 export function setFavorite(dispatch, user_id, media_id) {
-    axios
+    axiosInstance
         .post('/api/user/favs', { user_id: user_id, media_id })
         .then((res) => dispatch(setFavs(res.data.favorites)))
         .catch((err) => ({ error: err.message }));

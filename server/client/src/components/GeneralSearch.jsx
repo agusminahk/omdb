@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
@@ -6,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 
 import { setSearch } from '../state/search';
+import { axiosInstance } from '../config/axiosConfig';
 
 const GeneralSearch = () => {
     const history = useHistory();
@@ -16,11 +16,11 @@ const GeneralSearch = () => {
         if (e.key === 'Enter') {
             try {
                 let search = [];
-                const res = await axios.get(`/api/media/content/${input}`);
+                const res = await axiosInstance.get(`/api/media/content/${input}`);
                 const [movies, series] = res.data;
                 search = [movies, series];
 
-                const { data: userData } = await axios.post('/api/user', { userLike: input });
+                const { data: userData } = await axiosInstance.post('/api/user', { userLike: input });
                 search = [...search, userData];
                 dispatch(setSearch(search));
 

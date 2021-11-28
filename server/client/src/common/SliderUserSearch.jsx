@@ -85,9 +85,9 @@ const SliderSerieSearch = () => {
                     <Slider {...settings} ref={(slider) => setSlider(slider)}>
                         {users && users.length
                             ? users.map((user, i) => (
-                                  <>
+                                  <div key={i}>
                                       <UserCard key={user._id} user={user} id={`user-${i}`} />
-                                  </>
+                                  </div>
                               ))
                             : null}
                     </Slider>

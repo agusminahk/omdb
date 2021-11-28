@@ -73,9 +73,9 @@ const SliderMovieSearch = () => {
                 ) : null}
                 <Slider {...settings} ref={(slider) => setSlider(slider)}>
                     {movies.map((favorite, index) => (
-                        <>
+                        <div key={index}>
                             <MediaCard key={index} item={favorite} />
-                        </>
+                        </div>
                     ))}
                 </Slider>
             </Box>
