@@ -4,7 +4,8 @@
     "description": "omdb",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js"
+        "start": "nodemon app.js",
+        "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "author": "Agustin Minahk",
     "license": "ISC",
