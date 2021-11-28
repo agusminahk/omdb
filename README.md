@@ -1,4 +1,4 @@
-![logop5](https://i.postimg.cc/9rdw4VLL/bixbax.png)
+![](https://i.postimg.cc/9rdw4VLL/bixbax.png)
 
 # OMDb - B I X B A X 
 https://bixbax.herokuapp.com/
@@ -15,11 +15,13 @@ https://bixbax.herokuapp.com/
 -   Poder agregar y sacar una película a lista de favoritos.
 -   Ver y modificar lista de favoritos desde el perfil.
 -   Edicion de perfil (usuario y contraseña).
+-   Persistencia en la sesion.
 
 ### Caracteristicas en Desarrollo.
 
 -   Usuarios podrian ver su historial de reproduccion.
 -   Seccion de comentarios.
+-   Optimizaciones para dispositivos mobiles.
 
 ## Dev
 
