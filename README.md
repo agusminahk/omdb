@@ -17,6 +17,11 @@ https://bixbax.herokuapp.com/
 -   Edicion de perfil (usuario y contraseña).
 -   Persistencia en la sesion.
 
+### Caracteristicas de Registro y Login
+-   Username: solo puede contener letras y numeros (No se admiten espacios ni simbolos)
+-   Password: Mayor a 8 caracteres.
+-   Inicio de sesion usando email.
+
 ### Caracteristicas en Desarrollo.
 
 -   Usuarios podrian ver su historial de reproduccion.
