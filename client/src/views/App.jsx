@@ -44,8 +44,6 @@ const App = () => {
                 console.error({ err: err.message });
             }
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -59,7 +57,6 @@ const App = () => {
                 console.error({ err: err.message });
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key]);
 
     if (!media.length)

@@ -27,15 +27,18 @@
         "react-slick": "^0.28.1",
         "redux": "^4.1.2",
         "redux-logger": "^3.0.6",
+        "serve": "^13.0.2",
         "web-vitals": "^1.1.2"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "dev": "react-scripts start",
+        "start": "serve -s build",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "heroku-postbuild": "npm run build"
     },
-    "proxy": "http://localhost:8080",
+    "proxy": "https://bixbax-server.herokuapp.com",
     "eslintConfig": {
         "extends": [
             "react-app",

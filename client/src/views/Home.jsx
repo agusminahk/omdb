@@ -39,13 +39,14 @@ const Home = ({ content }) => {
 
                 <Flex direction="row-reverse">
                     <Wrap spacing="70px" justify="center" mr="10px">
-                        {media.map((item, i) => {
-                            return (
-                                <WrapItem key={i}>
-                                    <MediaCard key={item.imdbID} item={item} id={item.imdbID} />
-                                </WrapItem>
-                            );
-                        })}
+                        {media.length &&
+                            media.map((item, i) => {
+                                return (
+                                    <WrapItem key={i}>
+                                        <MediaCard key={item.imdbID} item={item} id={item.imdbID} />
+                                    </WrapItem>
+                                );
+                            })}
                     </Wrap>
                 </Flex>
                 <Flex direction="row" mx="auto" my="50px">
