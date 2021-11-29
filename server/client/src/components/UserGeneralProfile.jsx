@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     Container,
     Image,
@@ -21,19 +21,10 @@ import { BsBoxArrowUpRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 import iconUser from '../assets/icon_user_list.png';
-import { axiosInstance } from '../config/axiosConfig';
+import useProfile from '../hooks/useProfile';
 
 const UserProfile = ({ id }) => {
-    const [currentUser, setCurrentUser] = useState({});
-
-    useEffect(() => {
-        getData();
-        async function getData() {
-            const user = await axiosInstance.get(`/api/user/${id}`);
-            setCurrentUser(user.data[0]);
-        }
-    }, [id]);
-
+    const { currentUser } = useProfile(id);
     const header = ['Name', 'Type', 'Actions'];
 
     return (

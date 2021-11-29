@@ -25,16 +25,18 @@ import { CgUserlane, CgProfile } from 'react-icons/cg';
 import { FaEye } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 
-import { handleLogout } from '../helpers/functions';
+import useLogin from '../hooks/useLogin.js';
 import bixbax from '../assets/bixbax.svg';
 import Header from '../components/Header';
 import GeneralSearch from '../components/GeneralSearch';
 
 const NavBar = () => {
-    const user = useSelector(({ user }) => user);
     const history = useHistory();
-    const bg = useColorModeValue('white', 'gray.800');
     const mobileNav = useDisclosure();
+
+    const user = useSelector(({ user }) => user);
+    const { handleLogout } = useLogin();
+    const bg = useColorModeValue('white', 'gray.800');
 
     return (
         <div>

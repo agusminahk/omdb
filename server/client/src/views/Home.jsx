@@ -28,8 +28,7 @@ const Home = ({ content }) => {
                             color={'white'}
                             fontWeight="bold"
                         >
-                            your <chakra.span color={'teal.300'}>FAVORITE</chakra.span>
-                            's
+                            your <chakra.span color={'teal.300'}>FAVORITES</chakra.span>
                         </chakra.h2>
                         <FavsCarousel />
                     </Box>

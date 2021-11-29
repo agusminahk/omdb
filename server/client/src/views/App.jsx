@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router';
+
 import { getUser } from '../state/user.js';
 import { getUsers } from '../state/allUsers';
 import { setFavs } from '../state/favs.js';
 import { useDispatch } from 'react-redux';
-
 import { axiosInstance } from '../config/axiosConfig';
 import Navbar from './Navbar';
 import Home from './Home';

@@ -16,11 +16,12 @@ import { CgUserlane, CgProfile } from 'react-icons/cg';
 import { FaEye } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 
-import { handleLogout } from '../helpers/functions';
+import useLogin from '../hooks/useLogin.js';
 
 const UserNav = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const { handleLogout } = useLogin();
 
     return (
         <div>

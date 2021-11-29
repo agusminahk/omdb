@@ -7,15 +7,21 @@ import { Flex, Wrap, WrapItem, Button } from '@chakra-ui/react';
 
 const GridMedia = ({ content, type }) => {
     const [currentPage, setCurrentPage] = useState(0);
-    const media = content.slice(currentPage, currentPage + 24);
 
     const nextPage = () => (currentPage < content.length - 24 ? setCurrentPage(currentPage + 24) : null);
     const prevPage = () => (currentPage > 23 ? setCurrentPage(currentPage - 24) : null);
+
+    let media;
+    type === 'serie'
+        ? (media = content.slice(currentPage, currentPage + 8))
+        : (media = content.slice(currentPage, currentPage + 24));
 
     const location = useLocation();
 
     useEffect(() => {
         setCurrentPage(0);
+        media = content.slice(currentPage, currentPage + 24);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname]);
 
     return (

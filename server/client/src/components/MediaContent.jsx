@@ -14,7 +14,7 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { GiDirectorChair } from 'react-icons/gi';
 import { MdLayers } from 'react-icons/md';
@@ -26,10 +26,9 @@ import StatsCard from '../common/StatsCard';
 import LikeButton from '../common/LikeButton';
 import LikeButtonActive from '../common/LikeButtonActive';
 import { deleteFav } from '../state/favs.js';
-import { verify, setFavorite } from '../helpers/functions';
 import { toastDelete, toastAdd } from '../helpers/toastMessages';
 import './MediaContent.css';
-import { axiosInstance } from '../config/axiosConfig';
+import useMedia from '../hooks/useMedia';
 
 export const MediaContent = ({ id }) => {
     const toast = useToast();
@@ -37,20 +36,11 @@ export const MediaContent = ({ id }) => {
     const user = useSelector(({ user }) => user);
     const favs = useSelector(({ favs }) => favs);
 
-    const [media, setMedia] = useState({});
     const [play, setPlay] = useState(false);
+    const { media, verify, setFavorite } = useMedia(id);
 
     const genre = media?.Genre ? media.Genre.split(', ') : [];
     const year = media?.Year ? media.Year.substring(0, 4) : 'N/A';
-
-    useEffect(() => {
-        axiosInstance
-            .get(`/api/media/${id}`)
-            .then((res) => setMedia(res.data))
-            .catch((err) => ({ err: err.message }));
-
-        window.scrollTo(0, 0);
-    }, [id]);
 
     const check = verify(favs, media);
     return (

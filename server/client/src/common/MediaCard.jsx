@@ -9,18 +9,19 @@ import LikeButtonActive from './LikeButtonActive';
 import './MediaCard.css';
 
 import { deleteFav } from '../state/favs.js';
-import { verify, setFavorite } from '../helpers/functions';
 import { toastDelete, toastAdd } from '../helpers/toastMessages';
+import useMedia from '../hooks/useMedia';
 
 const MediaCard = ({ item }) => {
     const history = useHistory();
     const toast = useToast();
     const dispatch = useDispatch();
+
     const favs = useSelector((state) => state.favs);
     const user = useSelector((state) => state.user);
+    const { verify, setFavorite } = useMedia();
 
     const year = item?.Year ? item.Year.substring(0, 4) : 'N/A';
-
     const check = verify(favs, item);
 
     return (
@@ -40,7 +41,13 @@ const MediaCard = ({ item }) => {
                         <Image src={poster} objectFit="contains" h="100%" w="100%" />
                     )}
 
-                    <Flex className="info" direction="column" justifyContent="center" alignItems="center" w="full">
+                    <Flex
+                        className="info"
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        w="full"
+                    >
                         <Flex direction="wrap" w="full" pt="3">
                             <Badge rounded="full" px="3" mt="-1" colorScheme="teal">
                                 Full HD

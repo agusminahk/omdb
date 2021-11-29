@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     Flex,
     Heading,
@@ -8,53 +7,25 @@ import {
     Stack,
     InputLeftElement,
     chakra,
-    useToast,
     Box,
     Avatar,
     FormControl,
     InputRightElement,
 } from '@chakra-ui/react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import bixbax from '../assets/bixbax.svg';
-import { sendLoginRequest } from '../state/user';
-import { successToast, errorToast } from '../helpers/toastMessages';
-
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
+import useLogin from '../hooks/useLogin.js';
 
 const SignInForm = () => {
-    const toast = useToast();
-    const history = useHistory();
-    const dispatch = useDispatch();
+    const CFaUserAlt = chakra(FaUserAlt);
+    const CFaLock = chakra(FaLock);
 
-    // States
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const { email, setEmail, password, setPassword, showPassword, setShowPassword, handleSubmit } =
+        useLogin();
 
     const handleShowClick = () => setShowPassword(!showPassword);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await dispatch(sendLoginRequest({ email, password }))
-                .then((res) => {
-                    if (res.payload) {
-                        successToast(toast, `Welcome ${res.payload.username}`);
-                        history.push('/');
-                    } else {
-                        errorToast(toast, `Wrong email or password`);
-                    }
-                })
-
-                .catch((err) => ({ err: err.message }));
-        } catch (error) {
-            console.error({ error: error.message });
-        }
-    };
 
     return (
         <>

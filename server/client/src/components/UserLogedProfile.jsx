@@ -33,12 +33,7 @@ const AdminProfile = () => {
 
     const header = ['Name', 'Type', 'Actions'];
 
-    if (!user.email)
-        return (
-            <>
-                <Page404 />;
-            </>
-        );
+    if (!user.email) return <Page404 />;
 
     return (
         <>

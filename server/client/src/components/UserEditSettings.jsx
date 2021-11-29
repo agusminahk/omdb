@@ -1,7 +1,6 @@
 import {
     FormErrorMessage,
     Button,
-    useToast,
     Flex,
     FormControl,
     FormLabel,
@@ -10,24 +9,17 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
+import useEditProfile from '../hooks/useEditProfile.js';
 import Page404 from '../views/Page404';
-import { successToast, errorToast } from '../helpers/toastMessages';
-import { sendUpdateRequest } from '../state/user';
 
 const SignUpForm = () => {
-    const toast = useToast();
-    const history = useHistory();
-    const dispatch = useDispatch();
-
     const user = useSelector(({ user }) => user);
-    const [username, setUsername] = useState(user.username);
-    const [password, setPassword] = useState('');
-    const [confirmPass, setConfirmPass] = useState('');
+    const { username, setUsername, password, setPassword, confirmPass, setConfirmPass, onSubmit } =
+        useEditProfile();
 
     const reUser = /^[a-zA-Z0-9]*$/;
     const reSp = /^[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~*]*$/;
@@ -38,24 +30,7 @@ const SignUpForm = () => {
         formState: { errors, isSubmitting },
     } = useForm();
 
-    function onSubmit({ confirmPass, password, username }) {
-        if (confirmPass !== password) {
-            errorToast(toast, 'Passwords do not match!');
-            return;
-        }
-
-        return dispatch(sendUpdateRequest({ username, password: confirmPass, id: user._id })).then(() => {
-            successToast(toast, 'Your user has been edited correctly!');
-            history.push('/');
-        });
-    }
-
-    if (!user.email)
-        return (
-            <>
-                <Page404 />
-            </>
-        );
+    if (!user.email) return <Page404 />;
 
     return (
         <>

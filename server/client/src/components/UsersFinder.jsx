@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Avatar, Text, Flex, Wrap, WrapItem } from '@chakra-ui/react';
 import {
     AutoComplete,
@@ -6,32 +6,16 @@ import {
     AutoCompleteItem,
     AutoCompleteList,
 } from '@choc-ui/chakra-autocomplete';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import UserCard from '../common/UserCard';
 import Navbar from '../views/Navbar';
-import { getUsers } from '../state/allUsers';
 import '../views/Spinner.css';
-import { axiosInstance } from '../config/axiosConfig';
+import useInput from '../hooks/useInput';
 
 const Users = () => {
-    const dispatch = useDispatch();
-    const [input, setInput] = useState('');
-
-    const user = useSelector((state) => state.user);
     const users = useSelector((state) => state.allUsers);
-
-    useEffect(() => {
-        setUsers();
-        function setUsers() {
-            return axiosInstance
-                .post('/api/user', { userLike: input, user_id: user._id })
-                .then((res) => dispatch(getUsers(res.data)))
-                .catch((err) => ({ err: err.mesage }));
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [input]);
+    const { input, setInput } = useInput();
 
     if (!users)
         return (
