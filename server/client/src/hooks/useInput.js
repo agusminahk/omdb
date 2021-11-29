@@ -39,9 +39,8 @@ const useInput = () => {
                 .then((res) => dispatch(getUsers(res.data)))
                 .catch((err) => ({ err: err.mesage }));
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input]);
+
     return { input, setInput, _handleKeyDown };
 };
 

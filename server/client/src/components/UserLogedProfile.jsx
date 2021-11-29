@@ -50,6 +50,7 @@ const AdminProfile = () => {
                             color="white"
                             background="pink.500"
                             variant="solid"
+                            cursor="default"
                             _hover={{ background: 'pink.500' }}
                         >
                             {'Favorites'}
