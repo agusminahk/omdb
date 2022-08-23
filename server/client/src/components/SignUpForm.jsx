@@ -18,7 +18,6 @@ import useRegister from '../hooks/useRegister.js';
 const SignUpForm = () => {
     const { username, setUsername, email, setEmail, password, setPassword, onSubmit } = useRegister();
 
-    const reUser = /^\s+[a-zA-Z0-9_.-]*$/;
     const reSp = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~*]/;
 
     let {
@@ -59,10 +58,7 @@ const SignUpForm = () => {
                                 placeholder="Your Username"
                                 {...register('username', {
                                     required: 'Allow only numbers and characters',
-                                    pattern: {
-                                        value: reUser,
-                                        message: 'Allow Only numbers and characters',
-                                    },
+                                   
                                     minLength: { value: 3, message: 'Minimum length should be 3' },
                                 })}
                                 value={username}
